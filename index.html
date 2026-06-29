@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拼豆底卡生成器</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .beian-bar{position:fixed;bottom:0;left:0;right:0;z-index:5;width:100%;background:#1a1a1a;padding:6px 0;text-align:center;font-size:11px;line-height:1.4}
+    .beian-pc{display:flex;justify-content:center;align-items:center;gap:12px}
+    .beian-disclaimer{color:#f5c518;white-space:nowrap}
+    .beian-icp{color:#fff;text-decoration:none;white-space:nowrap}
+    .beian-gongan{display:inline-flex;align-items:center;gap:4px;color:#fff;text-decoration:none;white-space:nowrap}
+    .beian-gongan img{width:12px;height:12px}
+    @media(max-width:768px){.beian-pc{display:none}.beian-mobile{display:flex;flex-direction:column;align-items:center;gap:4px}.beian-mobile a,.beian-mobile span{display:block;line-height:1.6}}
+    @media(min-width:769px){.beian-mobile{display:none}}
+  </style>
+</head>
+<body>
+  <input type="file" id="file-input" accept="image/*" hidden>
+
+  <div id="upload-btn">导入图片</div>
+
+  <canvas id="canvas"></canvas>
+
+  <div id="bottom-bar">
+    <div class="control-group">
+      <span class="label">亮度</span>
+      <input type="range" id="brightness" min="-50" max="50" value="0" step="1">
+      <span class="val" id="brightness-val">0</span>
+    </div>
+    <div class="control-group">
+      <span class="label">对比度</span>
+      <input type="range" id="contrast" min="50" max="200" value="100" step="1">
+      <span class="val" id="contrast-val">100</span>
+    </div>
+    <div class="control-group">
+      <span class="label">饱和度</span>
+      <input type="range" id="saturation" min="0" max="200" value="100" step="1">
+      <span class="val" id="saturation-val">100</span>
+    </div>
+
+    <span class="sep">|</span>
+
+    <select id="scale-mode">
+      <option value="cover">裁切填充</option>
+      <option value="contain">完整适配</option>
+    </select>
+
+    <label class="toggle" id="dither-toggle">
+      <input type="checkbox" id="dither" checked>
+      <span>抖动</span>
+    </label>
+
+    <label class="toggle">
+      <input type="checkbox" id="dot-mode">
+      <span>圆点</span>
+    </label>
+
+    <label class="toggle">
+      <input type="checkbox" id="show-grid">
+      <span>网格线</span>
+    </label>
+
+    <span class="sep">|</span>
+
+    <select id="grid-preset">
+      <option value="30">30x30</option>
+      <option value="50" selected>50x50</option>
+      <option value="100">100x100</option>
+      <option value="custom">自定义</option>
+    </select>
+
+    <span class="btn" id="export-pdf">PDF</span>
+    <span class="btn" id="export-png">PNG</span>
+    <span class="btn" id="export-svg">SVG</span>
+    <span class="btn" id="export-csv">导出CSV材料清单</span>
+    <span class="btn" id="color-lib-btn">色库</span>
+
+    <span id="zoom-level">100%</span>
+  </div>
+
+  <div id="color-overlay">
+    <div id="color-overlay-header">
+      <span class="title">色库（264色）</span>
+      <span class="close-btn" id="color-overlay-close">&times;</span>
+      <span class="btn" id="import-csv-btn">导入CSV</span>
+      <span class="btn" id="reset-palette-btn">恢复默认</span>
+      <span class="btn" id="export-csv-palette-btn">导出CSV</span>
+    </div>
+    <input type="text" id="color-search" placeholder="搜索颜色...">
+    <div id="color-families"></div>
+    <div id="color-grid-list"></div>
+  </div>
+
+  <div id="stats-overlay">
+    <div id="stats-header">
+      <span class="title">统计</span>
+      <span class="close-btn" id="stats-close">&times;</span>
+    </div>
+    <div id="stats-content"></div>
+  </div>
+
+  <div id="empty-hint">拖拽图片到此处 或 点击右上角"导入图片"</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="js/constants.js"></script>
+  <script src="js/bead-grid.js"></script>
+  <script src="js/canvas-engine.js"></script>
+  <script src="js/image-processor.js"></script>
+  <script src="js/color-library.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/shortcuts.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/main.js"></script>
+
+  <div class="beian-bar">
+    <div class="beian-pc">
+      <span class="beian-disclaimer">本站内容仅供学习和交流，非商业用途</span>
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="beian-icp">浙ICP备2025187466号</a>
+      <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33030402001483" target="_blank" rel="noopener noreferrer" class="beian-gongan">
+        <img src="https://www.937788.xyz/gonganbeian.png" alt="公安备案" onerror="this.style.display='none'">
+        浙公网安备33030402001483号
+      </a>
+    </div>
+    <div class="beian-mobile">
+      <span class="beian-disclaimer">本站内容仅供学习和交流，非商业用途</span>
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="beian-icp">浙ICP备2025187466号</a>
+      <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33030402001483" target="_blank" rel="noopener noreferrer" class="beian-gongan">
+        <img src="https://www.937788.xyz/gonganbeian.png" alt="公安备案" onerror="this.style.display='none'">
+        浙公网安备33030402001483号
+      </a>
+    </div>
+  </div>
+</body>
+</html>

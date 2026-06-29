@@ -1,0 +1,418 @@
+/* Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #1e1e1e;
+  --canvas-bg: #2a2a2a;
+  --text: #cccccc;
+  --text-dim: #777777;
+  --accent: #888888;
+  --accent-hover: #aaaaaa;
+  --font-size: 13px;
+  --font-size-sm: 11px;
+  --bar-height: 48px;
+  --beian-height: 26px;
+  --overlay-bg: #1a1a1a;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: var(--font-size);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Canvas */
+#canvas {
+  display: block;
+  width: 100%;
+  height: calc(100vh - var(--bar-height) - var(--beian-height));
+  background: var(--canvas-bg);
+  cursor: grab;
+}
+#canvas:active {
+  cursor: grabbing;
+}
+
+/* Upload button */
+#upload-btn {
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  z-index: 10;
+  padding: 6px 14px;
+  color: var(--text);
+  cursor: pointer;
+  user-select: none;
+  font-size: var(--font-size);
+}
+#upload-btn:hover {
+  color: #ffffff;
+}
+
+/* Empty hint */
+#empty-hint {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--text-dim);
+  font-size: var(--font-size);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Bottom bar */
+#bottom-bar {
+  position: fixed;
+  bottom: var(--beian-height);
+  left: 0;
+  right: 0;
+  height: var(--bar-height);
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 20px;
+  z-index: 10;
+  user-select: none;
+}
+
+.sep {
+  color: #333;
+  font-size: 10px;
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.label {
+  color: var(--text-dim);
+  font-size: var(--font-size-sm);
+  min-width: 32px;
+}
+
+.val {
+  color: var(--text-dim);
+  font-size: var(--font-size-sm);
+  min-width: 24px;
+  text-align: right;
+}
+
+/* Range inputs - thin and minimal */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 2px;
+  background: #444;
+  outline: none;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: var(--accent-hover);
+}
+
+select {
+  background: transparent;
+  color: var(--text);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  padding: 2px 0;
+}
+select:hover {
+  color: #fff;
+}
+select option {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: var(--font-size-sm);
+}
+.toggle input {
+  display: none;
+}
+.toggle input:checked + span {
+  color: var(--text);
+}
+
+.btn {
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  user-select: none;
+}
+.btn:hover {
+  color: #fff;
+}
+
+#zoom-level {
+  color: var(--text-dim);
+  font-size: var(--font-size-sm);
+  margin-left: auto;
+}
+
+/* Overlay (color library, stats, share) */
+#color-overlay, #stats-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--overlay-bg);
+  z-index: 100;
+  display: none;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 20px;
+}
+#color-overlay.active, #stats-overlay.active {
+  display: flex;
+}
+
+#color-overlay-header,
+#stats-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 16px;
+  color: #fff;
+  margin-right: auto;
+}
+
+.close-btn {
+  font-size: 24px;
+  color: var(--text-dim);
+  cursor: pointer;
+  line-height: 1;
+}
+.close-btn:hover {
+  color: #fff;
+}
+
+/* Color Search */
+#color-search {
+  background: #2a2a2a;
+  border: none;
+  outline: none;
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: var(--font-size);
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 12px;
+}
+#color-search::placeholder {
+  color: #555;
+}
+
+/* Color Families */
+#color-families {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.family-btn {
+  padding: 4px 10px;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+}
+.family-btn:hover, .family-btn.active {
+  color: #fff;
+}
+
+/* Color Grid List */
+#color-grid-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.color-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+}
+
+.color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.color-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.color-code {
+  font-size: var(--font-size-sm);
+  color: var(--text);
+}
+
+.color-name {
+  font-size: var(--font-size-sm);
+  color: var(--text-dim);
+}
+
+.color-hex {
+  font-size: 10px;
+  color: #555;
+}
+
+/* Stats overlay */
+#stats-content {
+  color: var(--text);
+  font-size: var(--font-size);
+}
+
+.stats-row {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  color: var(--text-dim);
+  font-size: var(--font-size-sm);
+}
+
+.stat-value {
+  color: #fff;
+  font-size: 24px;
+}
+
+/* Distribution chart */
+#distribution-chart {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.dist-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 6px;
+}
+
+.dist-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.dist-info {
+  font-size: var(--font-size-sm);
+  color: var(--text);
+}
+
+/* ===== 移动端适配 ===== */
+@media (max-width: 768px) {
+  /* 底部工具栏：横向滚动 */
+  #bottom-bar {
+    gap: 8px;
+    padding: 0 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  #bottom-bar::-webkit-scrollbar { display: none; }
+
+  /* 移动端隐藏分隔符，节省空间 */
+  .sep { display: none; }
+
+  /* 缩小控件间距 */
+  .control-group { gap: 4px; }
+  .label { font-size: 10px; min-width: 28px; }
+  .val { font-size: 10px; min-width: 20px; }
+
+  /* 滑动条更短 */
+  input[type="range"] { width: 52px; }
+
+  /* 按钮和文字缩小 */
+  .btn { font-size: 10px; }
+  .toggle { font-size: 10px; gap: 2px; }
+  select { font-size: 10px; }
+  #zoom-level { font-size: 10px; }
+
+  /* 上传按钮 */
+  #upload-btn {
+    top: 8px;
+    right: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* 空状态提示 */
+  #empty-hint {
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  /* 覆盖层满屏 */
+  #color-overlay, #stats-overlay {
+    padding: 12px;
+  }
+
+  /* 色卡网格适配 */
+  #color-grid-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px;
+  }
+
+  .color-card { padding: 4px 6px; }
+  .color-swatch { width: 20px; height: 20px; }
+
+  /* 统计数字缩小 */
+  .stat-value { font-size: 20px; }
+  .stats-row { gap: 16px; }
+}

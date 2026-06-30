@@ -1,0 +1,348 @@
+// 拼豆底卡生成器 - 常量定义
+// 264色标准色板，按色系分组
+
+// 色系定义：{ key, name, codes }
+const COLOR_FAMILIES = [
+  { key: 'A', name: '白色/米色', codes: [] },
+  { key: 'B', name: '灰色', codes: [] },
+  { key: 'C', name: '黑色', codes: [] },
+  { key: 'D', name: '红色', codes: [] },
+  { key: 'E', name: '粉色', codes: [] },
+  { key: 'F', name: '橙色', codes: [] },
+  { key: 'G', name: '黄色', codes: [] },
+  { key: 'H', name: '绿色', codes: [] },
+  { key: 'J', name: '蓝色', codes: [] },
+  { key: 'K', name: '紫色', codes: [] },
+  { key: 'L', name: '棕色', codes: [] },
+  { key: 'M', name: '荧光', codes: [] },
+  { key: 'N', name: '透明/珠光', codes: [] },
+  { key: 'P', name: '特殊', codes: [] }
+];
+
+// 完整264色色板
+const DEFAULT_PALETTE = [
+  // ===== A: 白色/米色系 (14) =====
+  { code: 'A01', name: '纯白',     hex: '#FFFFFF' },
+  { code: 'A02', name: '雪白',     hex: '#FFFAFA' },
+  { code: 'A03', name: '奶白',     hex: '#FFFEF5' },
+  { code: 'A04', name: '象牙白',   hex: '#FFFFF0' },
+  { code: 'A05', name: '珍珠白',   hex: '#F8F8F0' },
+  { code: 'A06', name: '米白',     hex: '#F5F5DC' },
+  { code: 'A07', name: '奶油',     hex: '#FFFDD0' },
+  { code: 'A08', name: '古董白',   hex: '#FAEBD7' },
+  { code: 'A09', name: '亚麻',     hex: '#FAF0E6' },
+  { code: 'A10', name: '蛋壳',     hex: '#F0EAD6' },
+  { code: 'A11', name: '沙白',     hex: '#ECE5CE' },
+  { code: 'A12', name: '奶昔白',   hex: '#F3EDDE' },
+  { code: 'A13', name: '杏仁白',   hex: '#EFE6D0' },
+  { code: 'A14', name: '暖米',     hex: '#E8DEC2' },
+
+  // ===== B: 灰色系 (16) =====
+  { code: 'B01', name: '白灰',     hex: '#EBEBEB' },
+  { code: 'B02', name: '雾白灰',   hex: '#E0E0E0' },
+  { code: 'B03', name: '浅灰',     hex: '#D3D3D3' },
+  { code: 'B04', name: '银灰',     hex: '#C0C0C0' },
+  { code: 'B05', name: '中灰',     hex: '#ADADAD' },
+  { code: 'B06', name: '鸽灰',     hex: '#9B9B9B' },
+  { code: 'B07', name: '鼠灰',     hex: '#8A8A8A' },
+  { code: 'B08', name: '灰褐',     hex: '#787878' },
+  { code: 'B09', name: '深灰',     hex: '#676767' },
+  { code: 'B10', name: '烟灰',     hex: '#565656' },
+  { code: 'B11', name: '石板灰',   hex: '#4A4A4A' },
+  { code: 'B12', name: '铁灰',     hex: '#404040' },
+  { code: 'B13', name: '暗灰',     hex: '#3A3A3A' },
+  { code: 'B14', name: '炭灰',     hex: '#343434' },
+  { code: 'B15', name: '墨灰',     hex: '#2F2F2F' },
+  { code: 'B16', name: '暗夜灰',   hex: '#2B2B2B' },
+
+  // ===== C: 黑色系 (20) =====
+  { code: 'C01', name: '灰黑',     hex: '#363636' },
+  { code: 'C02', name: '暗灰黑',   hex: '#323232' },
+  { code: 'C03', name: '钢灰黑',   hex: '#2E2E2E' },
+  { code: 'C04', name: '岩灰黑',   hex: '#2A2A2A' },
+  { code: 'C05', name: '鸦青',     hex: '#272727' },
+  { code: 'C06', name: '铅黑',     hex: '#242424' },
+  { code: 'C07', name: '炭黑',     hex: '#212121' },
+  { code: 'C08', name: '烟黑',     hex: '#1E1E1E' },
+  { code: 'C09', name: '雾黑',     hex: '#1B1B1B' },
+  { code: 'C10', name: '曜石黑',   hex: '#181818' },
+  { code: 'C11', name: '暗砂黑',   hex: '#151515' },
+  { code: 'C12', name: '沉黑',     hex: '#121212' },
+  { code: 'C13', name: '深黑',     hex: '#101010' },
+  { code: 'C14', name: '墨色',     hex: '#0D0D0D' },
+  { code: 'C15', name: '浓黑',     hex: '#0A0A0A' },
+  { code: 'C16', name: '暗墨',     hex: '#080808' },
+  { code: 'C17', name: '极黑',     hex: '#050505' },
+  { code: 'C18', name: '深幽黑',   hex: '#030303' },
+  { code: 'C19', name: '无光黑',   hex: '#010101' },
+  { code: 'C20', name: '纯黑',     hex: '#000000' },
+
+  // ===== D: 红色系 (26) =====
+  { code: 'D01', name: '浅粉红',   hex: '#FFB3B3' },
+  { code: 'D02', name: '淡红',     hex: '#FF8C8C' },
+  { code: 'D03', name: '珊瑚红',   hex: '#FF6F61' },
+  { code: 'D04', name: '鲑红',     hex: '#FA8072' },
+  { code: 'D05', name: '西瓜红',   hex: '#FC6C85' },
+  { code: 'D06', name: '草莓红',   hex: '#FC5A8D' },
+  { code: 'D07', name: '玫瑰红',   hex: '#E8687E' },
+  { code: 'D08', name: '辣椒红',   hex: '#E74C3C' },
+  { code: 'D09', name: '番茄红',   hex: '#FF6347' },
+  { code: 'D10', name: '朱红',     hex: '#FF3F1F' },
+  { code: 'D11', name: '猩红',     hex: '#E32636' },
+  { code: 'D12', name: '正红',     hex: '#DD1111' },
+  { code: 'D13', name: '樱桃红',   hex: '#CC1A3A' },
+  { code: 'D14', name: '绯红',     hex: '#DC143C' },
+  { code: 'D15', name: '中国红',   hex: '#DE2910' },
+  { code: 'D16', name: '胭脂红',   hex: '#CC1535' },
+  { code: 'D17', name: '石榴红',   hex: '#C41E3A' },
+  { code: 'D18', name: '罂粟红',   hex: '#BB1122' },
+  { code: 'D19', name: '砖红',     hex: '#B22222' },
+  { code: 'D20', name: '玛瑙红',   hex: '#A8292E' },
+  { code: 'D21', name: '深红',     hex: '#991111' },
+  { code: 'D22', name: '枣红',     hex: '#8B1A1A' },
+  { code: 'D23', name: '勃艮第',   hex: '#800020' },
+  { code: 'D24', name: '酒红',     hex: '#722F37' },
+  { code: 'D25', name: '锈红',     hex: '#6B2222' },
+  { code: 'D26', name: '暗红',     hex: '#550000' },
+
+  // ===== E: 粉色系 (18) =====
+  { code: 'E01', name: '蜜桃',     hex: '#FFDAB9' },
+  { code: 'E02', name: '花朵粉',   hex: '#FADADD' },
+  { code: 'E03', name: '浅粉',     hex: '#FFB6C1' },
+  { code: 'E04', name: '泡泡糖粉', hex: '#FFC0CB' },
+  { code: 'E05', name: '樱花粉',   hex: '#FFB7C5' },
+  { code: 'E06', name: '贝壳粉',   hex: '#F7CAC9' },
+  { code: 'E07', name: '杏粉',     hex: '#F4C2C2' },
+  { code: 'E08', name: '玫瑰粉',   hex: '#E8A0BF' },
+  { code: 'E09', name: '牡丹粉',   hex: '#F78FB3' },
+  { code: 'E10', name: '桃红',     hex: '#FB607F' },
+  { code: 'E11', name: '粉红',     hex: '#FF69B4' },
+  { code: 'E12', name: '洋红',     hex: '#FF3399' },
+  { code: 'E13', name: '热粉',     hex: '#FF1493' },
+  { code: 'E14', name: '品红',     hex: '#E6007E' },
+  { code: 'E15', name: '紫粉',     hex: '#DDA0DD' },
+  { code: 'E16', name: '淡紫粉',   hex: '#E6A8D7' },
+  { code: 'E17', name: '粉紫',     hex: '#D891D8' },
+  { code: 'E18', name: '深粉',     hex: '#C71585' },
+
+  // ===== F: 橙色系 (16) =====
+  { code: 'F01', name: '杏橙',     hex: '#FFE0B2' },
+  { code: 'F02', name: '蜜橘',     hex: '#FFD1A4' },
+  { code: 'F03', name: '浅橙',     hex: '#FFBB77' },
+  { code: 'F04', name: '甜橙',     hex: '#FF9955' },
+  { code: 'F05', name: '橙色',     hex: '#FF8000' },
+  { code: 'F06', name: '柑橘',     hex: '#FFA500' },
+  { code: 'F07', name: '亮橙',     hex: '#FF8C00' },
+  { code: 'F08', name: '南瓜',     hex: '#FF7518' },
+  { code: 'F09', name: '铬橙',     hex: '#FF6600' },
+  { code: 'F10', name: '深橙',     hex: '#E06000' },
+  { code: 'F11', name: '胡萝卜',   hex: '#ED9121' },
+  { code: 'F12', name: '柿橙',     hex: '#EE5500' },
+  { code: 'F13', name: '赤陶',     hex: '#CC7722' },
+  { code: 'F14', name: '铁锈橙',   hex: '#B8651A' },
+  { code: 'F15', name: '琥珀橙',   hex: '#FFBF00' },
+  { code: 'F16', name: '暖橙',     hex: '#FF7733' },
+
+  // ===== G: 黄色系 (18) =====
+  { code: 'G01', name: '奶白黄',   hex: '#FFFFF0' },
+  { code: 'G02', name: '花粉黄',   hex: '#FEFACD' },
+  { code: 'G03', name: '奶油黄',   hex: '#FFFACD' },
+  { code: 'G04', name: '淡黄',     hex: '#FFF8DC' },
+  { code: 'G05', name: '鹅黄',     hex: '#FFF0AA' },
+  { code: 'G06', name: '浅黄',     hex: '#FFFF99' },
+  { code: 'G07', name: '香蕉黄',   hex: '#FFE135' },
+  { code: 'G08', name: '黄色',     hex: '#FFFF00' },
+  { code: 'G09', name: '亮黄',     hex: '#FFEA00' },
+  { code: 'G10', name: '柠檬黄',   hex: '#FFF44F' },
+  { code: 'G11', name: '向日葵',   hex: '#FFDA03' },
+  { code: 'G12', name: '蜜黄',     hex: '#F0C75E' },
+  { code: 'G13', name: '金色',     hex: '#FFD700' },
+  { code: 'G14', name: '芥末黄',   hex: '#E1AD01' },
+  { code: 'G15', name: '暗金',     hex: '#B8860B' },
+  { code: 'G16', name: '深黄',     hex: '#D4C300' },
+  { code: 'G17', name: '沙黄',     hex: '#E2CA76' },
+  { code: 'G18', name: '琥珀黄',   hex: '#FFBF00' },
+
+  // ===== H: 绿色系 (30) =====
+  { code: 'H01', name: '茶绿',     hex: '#D0F0C0' },
+  { code: 'H02', name: '嫩绿',     hex: '#B5E6A0' },
+  { code: 'H03', name: '柳绿',     hex: '#AFE3A2' },
+  { code: 'H04', name: '浅绿',     hex: '#90EE90' },
+  { code: 'H05', name: '薄荷绿',   hex: '#98FF98' },
+  { code: 'H06', name: '春绿',     hex: '#00FF7F' },
+  { code: 'H07', name: '苹果绿',   hex: '#8DB600' },
+  { code: 'H08', name: '芦荟绿',   hex: '#98C793' },
+  { code: 'H09', name: '翠绿',     hex: '#00D26A' },
+  { code: 'H10', name: '草绿',     hex: '#7EC850' },
+  { code: 'H11', name: '荧光绿',   hex: '#39FF14' },
+  { code: 'H12', name: '竹绿',     hex: '#5E8C31' },
+  { code: 'H13', name: '绿色',     hex: '#00AA00' },
+  { code: 'H14', name: '亮绿',     hex: '#33BB33' },
+  { code: 'H15', name: '牛油果绿', hex: '#87A96B' },
+  { code: 'H16', name: '苔绿',     hex: '#8A9A5B' },
+  { code: 'H17', name: '卡其绿',   hex: '#6B7B3A' },
+  { code: 'H18', name: '橄榄绿',   hex: '#556B2F' },
+  { code: 'H19', name: '军绿',     hex: '#4B5320' },
+  { code: 'H20', name: '森林绿',   hex: '#228B22' },
+  { code: 'H21', name: '常青绿',   hex: '#009B77' },
+  { code: 'H22', name: '青绿',     hex: '#40E0D0' },
+  { code: 'H23', name: '碧绿',     hex: '#1ABC9C' },
+  { code: 'H24', name: '海绿',     hex: '#2E8B57' },
+  { code: 'H25', name: '蒂芙尼绿', hex: '#81D8D0' },
+  { code: 'H26', name: '湖水绿',   hex: '#30D5C8' },
+  { code: 'H27', name: '松绿',     hex: '#01796F' },
+  { code: 'H28', name: '孔雀绿',   hex: '#008080' },
+  { code: 'H29', name: '墨绿',     hex: '#0B5345' },
+  { code: 'H30', name: '深绿',     hex: '#006400' },
+
+  // ===== J: 蓝色系 (36) =====
+  { code: 'J01', name: '爱丽丝蓝', hex: '#F0F8FF' },
+  { code: 'J02', name: '冰蓝',     hex: '#C5E0F0' },
+  { code: 'J03', name: '婴儿蓝',   hex: '#89CFF0' },
+  { code: 'J04', name: '粉蓝',     hex: '#A9CBEB' },
+  { code: 'J05', name: '淡蓝',     hex: '#B0E0E6' },
+  { code: 'J06', name: '浅蓝',     hex: '#ADD8E6' },
+  { code: 'J07', name: '天蓝',     hex: '#87CEEB' },
+  { code: 'J08', name: '长春花蓝', hex: '#CCCCFF' },
+  { code: 'J09', name: '蔚蓝',     hex: '#00BFFF' },
+  { code: 'J10', name: '道奇蓝',   hex: '#1E90FF' },
+  { code: 'J11', name: '湛蓝',     hex: '#007FFF' },
+  { code: 'J12', name: '湖蓝',     hex: '#30A0E0' },
+  { code: 'J13', name: '极光蓝',   hex: '#45B5E0' },
+  { code: 'J14', name: '矢车菊蓝', hex: '#6495ED' },
+  { code: 'J15', name: '蓝色',     hex: '#0000FF' },
+  { code: 'J16', name: '宝蓝',     hex: '#4169E1' },
+  { code: 'J17', name: '蓝灰',     hex: '#6699CC' },
+  { code: 'J18', name: '雾蓝',     hex: '#7B9EBF' },
+  { code: 'J19', name: '灰蓝',     hex: '#5B7FA0' },
+  { code: 'J20', name: '钢蓝',     hex: '#4682B4' },
+  { code: 'J21', name: '铁蓝',     hex: '#3A70A5' },
+  { code: 'J22', name: '海洋蓝',   hex: '#006994' },
+  { code: 'J23', name: '蓝绿',     hex: '#0D98BA' },
+  { code: 'J24', name: '青蓝',     hex: '#008B8B' },
+  { code: 'J25', name: '松石蓝',   hex: '#40BAD5' },
+  { code: 'J26', name: '石板蓝',   hex: '#6A5ACD' },
+  { code: 'J27', name: '靛蓝',     hex: '#3F51B5' },
+  { code: 'J28', name: '鸢尾蓝',   hex: '#5A4FCF' },
+  { code: 'J29', name: '牛仔蓝',   hex: '#5D76A9' },
+  { code: 'J30', name: '钴蓝',     hex: '#0047AB' },
+  { code: 'J31', name: '深海蓝',   hex: '#003F5C' },
+  { code: 'J32', name: '海军蓝',   hex: '#000080' },
+  { code: 'J33', name: '普鲁士蓝', hex: '#003153' },
+  { code: 'J34', name: '午夜蓝',   hex: '#191970' },
+  { code: 'J35', name: '藏蓝',     hex: '#1B2A4A' },
+  { code: 'J36', name: '深蓝',     hex: '#00008B' },
+
+  // ===== K: 紫色系 (24) =====
+  { code: 'K01', name: '藕荷色',   hex: '#E1C4D0' },
+  { code: 'K02', name: '丁香紫',   hex: '#C8A2C8' },
+  { code: 'K03', name: '淡紫',     hex: '#D8BFD8' },
+  { code: 'K04', name: '浅紫',     hex: '#CBA7E8' },
+  { code: 'K05', name: '薰衣草',   hex: '#B57EDC' },
+  { code: 'K06', name: '木槿紫',   hex: '#D891EF' },
+  { code: 'K07', name: '紫藤花',   hex: '#A87DC2' },
+  { code: 'K08', name: '紫藤色',   hex: '#B185DB' },
+  { code: 'K09', name: '兰花紫',   hex: '#DA70D6' },
+  { code: 'K10', name: '紫晶',     hex: '#9966CC' },
+  { code: 'K11', name: '紫色',     hex: '#800080' },
+  { code: 'K12', name: '星光紫',   hex: '#9370DB' },
+  { code: 'K13', name: '紫灰',     hex: '#9885B2' },
+  { code: 'K14', name: '薰衣草灰', hex: '#A899AA' },
+  { code: 'K15', name: '堇紫',     hex: '#7A5DC7' },
+  { code: 'K16', name: '紫罗兰',   hex: '#8B00FF' },
+  { code: 'K17', name: '蓝紫',     hex: '#6A0DAD' },
+  { code: 'K18', name: '葡萄紫',   hex: '#6F2DA8' },
+  { code: 'K19', name: '梅紫',     hex: '#C08081' },
+  { code: 'K20', name: '紫红',     hex: '#8B008B' },
+  { code: 'K21', name: '茄紫',     hex: '#614051' },
+  { code: 'K22', name: '暮光紫',   hex: '#5B4E77' },
+  { code: 'K23', name: '深紫',     hex: '#4B0082' },
+  { code: 'K24', name: '暗紫',     hex: '#301934' },
+
+  // ===== L: 棕色系 (20) =====
+  { code: 'L01', name: '肤白',     hex: '#FDEBD0' },
+  { code: 'L02', name: '肤色',     hex: '#E8C39E' },
+  { code: 'L03', name: '浅肤色',   hex: '#DEB887' },
+  { code: 'L04', name: '沙色',     hex: '#D2B48C' },
+  { code: 'L05', name: '卡其',     hex: '#C3B091' },
+  { code: 'L06', name: '驼色',     hex: '#C19A6B' },
+  { code: 'L07', name: '浅棕',     hex: '#C49A6C' },
+  { code: 'L08', name: '蜜色',     hex: '#C8964E' },
+  { code: 'L09', name: '焦糖',     hex: '#AF6F2C' },
+  { code: 'L10', name: '杏仁棕',   hex: '#AF6E4D' },
+  { code: 'L11', name: '赭石',     hex: '#CC7722' },
+  { code: 'L12', name: '茶褐',     hex: '#8B5A2B' },
+  { code: 'L13', name: '棕色',     hex: '#8B4513' },
+  { code: 'L14', name: '黄褐',     hex: '#996633' },
+  { code: 'L15', name: '琥珀棕',   hex: '#A67B5B' },
+  { code: 'L16', name: '咖啡',     hex: '#6F4E37' },
+  { code: 'L17', name: '巧克力',   hex: '#7B3F00' },
+  { code: 'L18', name: '可可',     hex: '#6F4235' },
+  { code: 'L19', name: '栗色',     hex: '#954535' },
+  { code: 'L20', name: '深棕',     hex: '#5C3317' },
+
+  // ===== M: 荧光色系 (8) =====
+  { code: 'M01', name: '荧光黄',   hex: '#CCFF00' },
+  { code: 'M02', name: '荧光绿',   hex: '#39FF14' },
+  { code: 'M03', name: '荧光橙',   hex: '#FF5E00' },
+  { code: 'M04', name: '荧光粉',   hex: '#FF1493' },
+  { code: 'M05', name: '荧光红',   hex: '#FF0040' },
+  { code: 'M06', name: '荧光蓝',   hex: '#15F4EE' },
+  { code: 'M07', name: '荧光紫',   hex: '#BF00FF' },
+  { code: 'M08', name: '霓虹粉',   hex: '#FE28A2' },
+
+  // ===== N: 透明/珠光系 (6) =====
+  { code: 'N01', name: '透明',     hex: '#E8E8E8' },
+  { code: 'N02', name: '透明白',   hex: '#F2F2F2' },
+  { code: 'N03', name: '透明蓝',   hex: '#D5E8F5' },
+  { code: 'N04', name: '透明粉',   hex: '#F0DCE8' },
+  { code: 'N05', name: '珠光白',   hex: '#F8F8F5' },
+  { code: 'N06', name: '珠光粉',   hex: '#F5E0E8' },
+
+  // ===== P: 特殊色系 (12) =====
+  { code: 'P01', name: '金属金',   hex: '#D4AF37' },
+  { code: 'P02', name: '金属银',   hex: '#C0C0C0' },
+  { code: 'P03', name: '金属铜',   hex: '#B87333' },
+  { code: 'P04', name: '闪粉白',   hex: '#F8F0E0' },
+  { code: 'P05', name: '闪粉金',   hex: '#E8D070' },
+  { code: 'P06', name: '夜光绿',   hex: '#C0E0B0' },
+  { code: 'P07', name: '夜光蓝',   hex: '#B0C8E0' },
+  { code: 'P08', name: '夜光白',   hex: '#EAEED0' },
+  { code: 'P09', name: '哑光黑',   hex: '#1C1C1C' },
+  { code: 'P10', name: '哑光白',   hex: '#EBEBEB' },
+  { code: 'P11', name: '哑光灰',   hex: '#787878' },
+  { code: 'P12', name: '金属红',   hex: '#B8312F' }
+];
+
+// 为色系填充对应的色号列表
+(function() {
+  DEFAULT_PALETTE.forEach(function(c) {
+    var family = c.code.charAt(0);
+    var found = COLOR_FAMILIES.find(function(f) { return f.key === family; });
+    if (found) { found.codes.push(c.code); }
+  });
+})();
+
+// 为每个颜色添加 RGB 数组（运行时解析 hex）
+DEFAULT_PALETTE.forEach(function(c) {
+  var h = c.hex;
+  c.rgb = [
+    parseInt(h.slice(1, 3), 16),
+    parseInt(h.slice(3, 5), 16),
+    parseInt(h.slice(5, 7), 16)
+  ];
+  c.index = DEFAULT_PALETTE.indexOf(c);
+});
+
+// 底板预设尺寸（正方形一边的珠子数）
+var GRID_PRESETS = {
+  30: '30x30 (小)',
+  50: '50x50 (标准)',
+  100: '100x100 (大)'
+};
+
+// 每珠直径，单位：毫米
+var BEAD_SIZE_MM = 5;
+
+// 标准底板尺寸，用于估算所需底板数（50x50 为标准底板）
+var STANDARD_BOARD_SIZE = 50;
